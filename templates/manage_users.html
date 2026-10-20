@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>🖥 Manage Users 🖥</title>
+    <style>
+        .music-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        }
+
+        .note {
+            position: absolute;
+            color: rgba(215, 85, 255, 0.6);
+            font-weight: bold;
+            animation: floatNote linear infinite;
+        }
+
+        .note:hover {
+            transform: scale(1.5);
+        }
+
+        .n1 {
+            left: 10%;
+            top: 80%;
+            font-size: 25px;
+            animation-duration: 24s;
+        }
+
+        .n2 {
+            left: 20%;
+            top: 60%;
+            font-size: 37px;
+            animation-duration: 19s;
+        }
+
+        .n3 {
+            left: 35%;
+            top: 90%;
+            font-size: 29px;
+            animation-duration: 25s;
+        }
+
+        .n4 {
+            left: 50%;
+            top: 70%;
+            font-size: 42px;
+            animation-duration: 28s;
+        }
+
+        .n5 {
+            left: 65%;
+            top: 85%;
+            font-size: 21px;
+            animation-duration: 17s;
+        }
+
+        .n6 {
+            left: 80%;
+            top: 75%;
+            font-size: 34px;
+            animation-duration: 19s;
+        }
+
+        .n7 {
+            left: 90%;
+            top: 65%;
+            font-size: 29px;
+            animation-duration: 26s;
+        }
+
+        .n8 {
+            left: 40%;
+            top: 50%;
+            font-size: 33px;
+            animation-duration: 21s;
+        }
+
+        .n9 {
+            left: 75%;
+            top: 95%;
+            font-size: 40px;
+            animation-duration: 24s;
+        }
+
+        @keyframes floatNote {
+            from {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+            }
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFB6C1, #d8b4ff);
+            font-family: Arial, sans-serif;
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+            padding: 30px 0;
+        }
+
+        .modal {
+
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0px 10px 30px rgba(0,0,0,.3);
+        }
+
+        .delete-btn {
+            background: #ff5c8a;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            width: 500px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+            animation: float 5s ease-in-out infinite;
+        }
+        @keyframes float {
+                0%, 100% {
+                 transform: translateY(0);
+                }
+                50% {
+                 transform: translateY(-20px);
+                }
+        }
+
+        h1 {
+            color: hotpink;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #ffa9ff;
+        }
+
+        form {
+            background-color: #ffb7df;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            color: gray;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .subtitle {
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: hotpink;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: deeppink;
+            transform: scale(1.05);
+        }
+
+        ul {
+        list-style: none;
+        padding: 0;
+        }
+
+        li {
+            background: #ffe4f0;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="music-bg">
+        <span class="note n1">♪</span>
+        <span class="note n2">♫</span>
+        <span class="note n3">♬</span>
+        <span class="note n4">♪</span>
+        <span class="note n5">♫</span>
+        <span class="note n6">♬</span>
+        <span class="note n7">♪</span>
+        <span class="note n8">♫</span>
+        <span class="note n9">♬</span>
+    </div>
+
+    <div class="card">
+    <h1>🎀 FaceBeats User Manager 🎀</h1>
+    <p class="subtitle">Here you can manage all the users of the smart music player and their songs! 🖥</p>
+    </div>
+
+<br><br>
+
+    {% for user in users %}
+    <div class="card">
+    <h2>💖 {{ user.name }}</h2>
+
+    <p class="subtitle">{{ user.song_count }} songs stored 🎵</p>
+
+    {% if user.songs %}
+        <h3>Songs</h3>
+        <ul>
+        {% for song in user.songs %}
+
+            <li>
+                🎵 {{ song[1] }} — {{ song[2] }}
+                <button onclick="openDeleteModal(
+                `Delete song:<br><br>🎵 {{ song[1] }}`,
+                '/delete_song/{{ song[0] }}')">🗑</button>
+            </li>
+
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No songs added yet.</p>
+    {% endif %}
+
+    <button onclick="openDeleteModal(
+    `💖 {{ user.name }} 💖<br><br>This will remove:<br>• User profile<br>• {{ user.song_count }} songs`,
+    '/delete_user/{{ user.id }}'
+    )"> 🗑 Delete User </button>
+
+</div>
+
+{% endfor %}
+
+<div id="deleteModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>🌸 Confirm Deletion 🌸</h2>
+
+        <p id="modalText"></p>
+
+        <button onclick="closeModal()">
+            Cancel
+        </button>
+
+        <a id="confirmDeleteLink">
+
+            <button class="delete-btn">
+                Delete
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+    <script>
+
+    function openDeleteModal(message, url) {
+        document.getElementById("modalText").innerHTML = message;
+        document.getElementById("confirmDeleteLink").href = url;
+        document.getElementById("deleteModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("deleteModal").style.display = "none";
+    }
+
+    </script>
+
+        <a href="/"><button>🏠 Home</button></a>
+</body>
+</html>

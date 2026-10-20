@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>✨FaceBeats✨</title>
+
+    <style>
+
+        .music-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        }
+
+        .note {
+            position: absolute;
+            color: rgba(215, 85, 255, 0.6);
+            font-weight: bold;
+            animation: floatNote linear infinite;
+        }
+
+        .note:hover {
+            transform: scale(1.5);
+        }
+
+        .n1 {
+            left: 10%;
+            top: 80%;
+            font-size: 25px;
+            animation-duration: 24s;
+        }
+
+        .n2 {
+            left: 20%;
+            top: 60%;
+            font-size: 37px;
+            animation-duration: 19s;
+        }
+
+        .n3 {
+            left: 35%;
+            top: 90%;
+            font-size: 29px;
+            animation-duration: 25s;
+        }
+
+        .n4 {
+            left: 50%;
+            top: 70%;
+            font-size: 42px;
+            animation-duration: 28s;
+        }
+
+        .n5 {
+            left: 65%;
+            top: 85%;
+            font-size: 21px;
+            animation-duration: 17s;
+        }
+
+        .n6 {
+            left: 80%;
+            top: 75%;
+            font-size: 34px;
+            animation-duration: 19s;
+        }
+
+        .n7 {
+            left: 90%;
+            top: 65%;
+            font-size: 29px;
+            animation-duration: 26s;
+        }
+
+        .n8 {
+            left: 40%;
+            top: 50%;
+            font-size: 33px;
+            animation-duration: 21s;
+        }
+
+        .n9 {
+            left: 75%;
+            top: 95%;
+            font-size: 40px;
+            animation-duration: 24s;
+        }
+
+        @keyframes floatNote {
+            from {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-120vh) rotate(360deg);
+            }
+        }
+
+        body {
+            background: linear-gradient(135deg, #FFB6C1, #d8b4ff);
+            font-family: Arial, sans-serif;
+            text-align: center;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            min-height: 100vh;
+
+            margin: 0;
+            padding: 30px 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            width: 500px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .recognized-card {
+            background: #ffe4f0;
+            padding: 40px;
+            border-radius: 25px;
+            width: 500px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+            animation: float 5s ease-in-out infinite;
+        }
+
+         @keyframes float {
+                0%, 100% {
+                 transform: translateY(0);
+                }
+                50% {
+                 transform: translateY(-20px);
+                }
+        }
+
+        .success-card {
+        background: #fff0f8;
+        border: 3px solid hotpink;
+        animation:
+            fadeIn 0.5s ease,
+            floatSuccess 5s ease-in-out infinite,
+            fadeOut 1s ease 4s forwards;
+        }
+        @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(20px);}
+        to {opacity: 1; transform: translateY(0);}
+        }
+        @keyframes floatSuccess {
+            0%, 100% {
+        transform: translateY(0);}
+        50% {
+        transform: translateY(-6px);}
+        }
+        @keyframes fadeOut {
+        from {opacity: 1;}
+        to {opacity: 0; transform: translateY(-20px) scale(0.95);}
+        }
+
+
+        h1 {
+            color: hotpink;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        .album-cover {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .flash-recognition-card {
+        position: fixed;
+        top: 25px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+
+        background: #fff0f8;
+        border: 3px solid hotpink;
+        border-radius: 20px;
+
+        padding: 20px 30px;
+        width: 420px;
+
+        box-shadow: 0px 10px 30px rgba(0,0,0,0.25);
+
+        animation:
+            fadeIn 0.4s ease,
+            floatSuccess 4s ease-in-out infinite,
+            fadeOut 1s ease 3.5s forwards;
+        }
+
+        .flash-recognition-card h2 {
+            margin: 0;
+            color: hotpink;
+        }
+
+        .flash-recognition-card p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        .flash-dot {
+            display: inline-block;
+            animation: pulse 1.2s infinite;
+        }
+
+        .song-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .artist-name {
+            font-size: 18px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .waiting {
+        color: #777;
+        animation: pulse 2s infinite;
+    }
+
+        @keyframes pulse {
+
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+
+        }
+
+        .progress {
+        width: 100%;
+        margin-top: 10px;
+        accent-color: #ff69b4;
+        cursor: default;
+        }
+
+        .progress:disabled {
+            opacity: 1;
+        }
+
+        .icons {
+            font-size: 28px;
+            margin-top: 20px;
+        }
+
+        .heart {
+
+            cursor: pointer;
+
+            transition: transform 0.3s;
+        }
+
+        .heart:hover {
+            transform: scale(1.3);
+        }
+
+        .notes {
+
+            font-size: 30px;
+
+            margin-top: 20px;
+
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .sparkles {
+            margin-top: 10px;
+            font-size: 22px;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+
+            0% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        button {
+            background: hotpink;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: deeppink;
+            transform: scale(1.05);
+        }
+
+        .playing {
+            margin-top: 25px;
+            padding: 15px;
+            background: #ffe4f0;
+            border-radius: 15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="music-bg">
+        <span class="note n1">♪</span>
+        <span class="note n2">♫</span>
+        <span class="note n3">♬</span>
+        <span class="note n4">♪</span>
+        <span class="note n5">♫</span>
+        <span class="note n6">♬</span>
+        <span class="note n7">♪</span>
+        <span class="note n8">♫</span>
+        <span class="note n9">♬</span>
+    </div>
+
+    {% with messages = get_flashed_messages(category_filter=["recognition"]) %}
+    {% if messages %}
+        {% for message in messages %}
+
+        <div class="flash-recognition-card">
+            <h2>📷 Face Recognition Started</h2>
+            <p>
+                {{ message }}
+                <span class="flash-dot">●</span>
+            </p>
+        </div>
+
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="card" >
+        <h1> 💕 Welcome to FaceBeats 💕 </h1>
+
+        <p class="subtitle">
+            Smart Music Player with Face Recognition
+        </p>
+
+        <a href="/register"><button>Register User</button></a>
+        <a href="/add_song"><button>Add Song</button></a><br>
+
+        <a href="/admin"><button>Manage Users</button></a>
+        <a href="/recognize"><button>Start Recognition</button></a>
+    </div>
+
+    <div class="recognized-card">
+        <h2>👤 Recognized User</h2>
+        {% if user %}
+            <h1>💖 {{ user }} 💖</h1>
+            <p>🎵 Playing your favorites...</p>
+            <a href="/clear_user"><button style="background: #ff6b6b;">Reset Player</button></a>
+        {% else %}
+            <h1>📷</h1>
+            <p class="waiting">Waiting for user . . .</p>
+        {% endif %}
+    </div>
+        
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="card success-card">
+
+                <h2>✨ New User Registered ✨</h2>
+
+                <p>{{ message }}</p>
+
+            </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+{% if song %}
+
+    <div class="card">
+
+    <h1>🎵 FaceBeats</h1>
+
+    <p>
+        Face Recognition + Raspberry Pi
+    </p>
+
+    <div class="playing">
+
+        <h3>Currently Playing</h3>
+
+        <img
+        class="album-cover"
+        src="{{ song.cover }}">
+
+        <h3>🎵 {{ song.title }}</h3>
+
+        <p>{{ song.artist }}</p>
+    
+        <input
+            class="progress"
+            type="range"
+            min="0"
+            max="100"
+            value="35"
+            disabled>
+
+        <div class="sparkles">
+            ✨ ✨ ✨ ✨ ✨
+        </div>
+
+    </div>
+
+    </div>
+
+{% endif %}
+
+        </div>
+
+    </div>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<script>
+    // Keep track of who is currently displayed on the page
+    const currentUser = "{{ user if user else '' }}";
+
+    // Poll the backend every 2 seconds to see if a new user was recognized
+    setInterval(() => {
+        fetch('/status')
+            .then(response => response.json())
+            .then(data => {
+                const fetchedUser = data.user || '';
+                
+                // If the user changed (someone new recognized, or player was cleared), reload the page
+                if (fetchedUser !== currentUser) {
+                    location.reload(); 
+                }
+            })
+            .catch(err => console.error("Error fetching status:", err));
+    }, 2000); 
+</script>
+
+<script>
+let lastUser = null;
+
+async function checkUser() {
+    try {
+        const res = await fetch("/current_user");
+        const data = await res.json();
+
+        if (data.user && data.user !== "None") {
+
+            // refresh only if user changed
+            if (lastUser !== data.user) {
+                lastUser = data.user;
+                window.location.reload();
+            }
+        }
+
+    } catch (e) {
+        console.log("check failed");
+    }
+}
+</script>
+
+</body>
+
+</html>

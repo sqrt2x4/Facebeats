@@ -1,0 +1,8 @@
+0,Cristiana
+1,Daria
+2,Iasmina
+3,Mario
+4,Max
+5,Ronaldo
+6,Sebastian
+7,agy
